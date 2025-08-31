@@ -1,39 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ff4757">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>CareZiaSpace - Digital Emergency Directory & Communication Platform</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #2f3542 0%, #40739e 100%);
-            min-height: 100vh;
-            color: white;
-        }
-
-        .campus-guard-banner {
-            background: linear-gradient(45deg, #ff4757, #ffd700, #ff4757, #ffd700);
-            background-size: 400% 400%;
-            animation: gradientShift 3s ease infinite;
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
