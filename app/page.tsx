@@ -3,263 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emergency Remote - Life-Saving Technology</title>
+    <title>CareZiaSpace - Digital Emergency</title>
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: #2c3e50;
             color: white;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .header {
-            background: #1a1a2e;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-        }
-
-        .logo {
-            font-size: 18px;
+        .status-bar {
+            background: linear-gradient(135deg, #e74c3c 0%, #27ae60 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
             font-weight: 600;
+            font-size: 0.9rem;
+            position: relative;
         }
 
-        .contact-btn {
+        .status-bar::before {
+            content: '🛡️';
+            margin-right: 8px;
+        }
+
+        .lifetime-banner {
+            background: #f1c40f;
+            color: #2c3e50;
+            padding: 15px 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .lifetime-banner::before {
+            content: '⭐';
+            margin-right: 8px;
+        }
+
+        .app-title {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .emergency-container {
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .emergency-btn {
+            width: 100%;
+            border: none;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .emergency-btn:active::before {
+            left: 100%;
+        }
+
+        .emergency-btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-call {
             background: #e74c3c;
             color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .contact-btn:hover {
+        .btn-call:hover {
             background: #c0392b;
-            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
         }
 
-        .hero {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .hero h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0.95;
-        }
-
-        .main-container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .country-selector {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .country-selector h3 {
-            margin-bottom: 15px;
-            color: #3498db;
-        }
-
-        .country-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .country-btn {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            border: none;
+        .btn-location {
+            background: #3498db;
             color: white;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
         }
 
-        .country-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+        .btn-location:hover {
+            background: #2980b9;
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
         }
 
-        .country-btn.active {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-        }
-
-        .emergency-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .emergency-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .emergency-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .card-icon {
-            font-size: 2rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .action-btn {
-            background: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
-            border: none;
+        .btn-family {
+            background: #27ae60;
             color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
+        }
+
+        .btn-family:hover {
+            background: #219a52;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-medical {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .btn-medical:hover {
+            background: #8e44ad;
+            box-shadow: 0 8px 25px rgba(155, 89, 182, 0.3);
+        }
+
+        .btn-international {
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+            color: white;
+        }
+
+        .btn-international:hover {
+            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.3);
+        }
+
+        .btn-description {
             font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 120px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 5px;
         }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
-        }
-
-        .action-btn.emergency {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-        }
-
-        .action-btn.emergency:hover {
-            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
-        }
-
-        .action-btn.info {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-        }
-
-        .action-btn.info:hover {
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
-        }
-
-        .family-section {
-            background: rgba(255, 255, 255, 0.1);
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
         }
 
-        .family-section h3 {
-            color: #f39c12;
-            margin-bottom: 15px;
+        .modal-content {
+            background: #2c3e50;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #bdc3c7;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .contact-list {
-            display: grid;
-            gap: 10px;
+        .close:hover {
+            background: #e74c3c;
+            color: white;
         }
 
-        .contact-item {
-            background: rgba(255, 255, 255, 0.05);
+        .family-list {
+            margin: 20px 0;
+        }
+
+        .family-member {
+            background: rgba(255, 255, 255, 0.1);
             padding: 15px;
             border-radius: 10px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        .member-info {
+            flex-grow: 1;
         }
 
-        .contact-name {
+        .member-name {
             font-weight: 600;
             font-size: 1.1rem;
         }
 
-        .contact-relation {
+        .member-relation {
             color: #bdc3c7;
             font-size: 0.9rem;
         }
 
-        .contact-actions {
+        .member-actions {
             display: flex;
             gap: 10px;
         }
 
-        .contact-btn-small {
-            background: #27ae60;
-            border: none;
+        .action-btn {
+            background: #3498db;
             color: white;
+            border: none;
             padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
@@ -267,29 +262,87 @@
             transition: all 0.3s ease;
         }
 
-        .contact-btn-small:hover {
-            background: #219a52;
-            transform: translateY(-1px);
-        }
-
-        .contact-btn-small.track {
-            background: #3498db;
-        }
-
-        .contact-btn-small.track:hover {
+        .action-btn:hover {
             background: #2980b9;
         }
 
-        .gps-info {
-            background: rgba(46, 204, 113, 0.1);
-            border: 1px solid rgba(46, 204, 113, 0.3);
+        .action-btn.delete {
+            background: #e74c3c;
+        }
+
+        .action-btn.delete:hover {
+            background: #c0392b;
+        }
+
+        .add-family-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
             padding: 15px;
             border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .add-family-btn:hover {
+            background: #e67e22;
+        }
+
+        .form-group {
             margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ecf0f1;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .save-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: #219a52;
+        }
+
+        .gps-status {
+            background: rgba(39, 174, 96, 0.2);
+            border: 1px solid #27ae60;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px;
             text-align: center;
         }
 
-        .status-indicator {
+        .gps-indicator {
             display: inline-block;
             width: 12px;
             height: 12px;
@@ -305,451 +358,452 @@
             100% { opacity: 1; }
         }
 
-        .add-contact {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            border: none;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .add-contact:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
-        }
-
-        .modal {
-            display: none;
+        .notification {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 10001;
+            animation: slideInRight 0.5s ease;
+            max-width: 300px;
         }
 
-        .modal-content {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .close {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #bdc3c7;
+        .platform-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f39c12;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .close:hover {
-            color: #e74c3c;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
+        .platform-link:hover {
+            background: #e67e22;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 480px) {
+            .emergency-container {
+                padding: 15px;
             }
             
-            .hero h2 {
-                font-size: 1.5rem;
+            .modal-content {
+                margin: 5% auto;
+                padding: 20px;
+                width: 95%;
             }
             
-            .emergency-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .country-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            .emergency-btn {
+                padding: 20px 15px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">Emergency Remote</div>
-        <button class="contact-btn" onclick="showContactModal()">Contact Us</button>
+    <div class="status-bar">
+        CAMPUS GUARD ALERT: Emergency protocols activated
     </div>
 
-    <div class="hero">
-        <h1>Emergency Remote</h1>
-        <h2>Life-Saving Technology for Your Family</h2>
-        <p>Advanced AI-powered emergency response technology that connects your family when seconds matter most. One tap gives you organized emergency contacts, GPS location sharing, and 24/7 crisis support.</p>
+    <div class="lifetime-banner">
+        LIFETIME ACCESS - No monthly fees
     </div>
 
-    <div class="main-container">
-        <div class="gps-info">
-            <span class="status-indicator"></span>
-            <strong>GPS Active:</strong> Your location is being tracked for emergency services
-            <br><small>Lat: 35.9606° N, Long: 83.9207° W (Knoxville, TN)</small>
-        </div>
-
-        <div class="country-selector">
-            <h3>🌍 Select Your Country/Region</h3>
-            <p>Choose your location for localized emergency services and contacts</p>
-            <div class="country-grid">
-                <button class="country-btn active" onclick="selectCountry('US')" data-country="US">
-                    🇺🇸<br>USA
-                </button>
-                <button class="country-btn" onclick="selectCountry('CA')" data-country="CA">
-                    🇨🇦<br>Canada
-                </button>
-                <button class="country-btn" onclick="selectCountry('UK')" data-country="UK">
-                    🇬🇧<br>UK
-                </button>
-                <button class="country-btn" onclick="selectCountry('AU')" data-country="AU">
-                    🇦🇺<br>Australia
-                </button>
-                <button class="country-btn" onclick="selectCountry('DE')" data-country="DE">
-                    🇩🇪<br>Germany
-                </button>
-                <button class="country-btn" onclick="selectCountry('FR')" data-country="FR">
-                    🇫🇷<br>France
-                </button>
-                <button class="country-btn" onclick="selectCountry('JP')" data-country="JP">
-                    🇯🇵<br>Japan
-                </button>
-                <button class="country-btn" onclick="selectCountry('IN')" data-country="IN">
-                    🇮🇳<br>India
-                </button>
-            </div>
-        </div>
-
-        <div class="emergency-grid">
-            <div class="emergency-card">
-                <div class="card-header">
-                    <div class="card-icon">🚨</div>
-                    <div class="card-title">Emergency Services</div>
-                </div>
-                <p>Immediate access to police, fire, and medical emergency services</p>
-                <div class="action-buttons">
-                    <button class="action-btn emergency" onclick="callEmergency('911')">📞 Call 911</button>
-                    <button class="action-btn info" onclick="findNearbyServices('police')">🚓 Find Police</button>
-                </div>
-            </div>
-
-            <div class="emergency-card">
-                <div class="card-header">
-                    <div class="card-icon">🏥</div>
-                    <div class="card-title">Medical Services</div>
-                </div>
-                <p>Locate nearest hospitals, urgent care, and medical facilities</p>
-                <div class="action-buttons">
-                    <button class="action-btn emergency" onclick="callEmergency('911')">🚑 Call Ambulance</button>
-                    <button class="action-btn info" onclick="findNearbyServices('hospital')">🏥 Find Hospitals</button>
-                </div>
-            </div>
-
-            <div class="emergency-card">
-                <div class="card-header">
-                    <div class="card-icon">🔥</div>
-                    <div class="card-title">Fire Department</div>
-                </div>
-                <p>Fire emergency services and safety information</p>
-                <div class="action-buttons">
-                    <button class="action-btn emergency" onclick="callEmergency('911')">🚒 Call Fire Dept</button>
-                    <button class="action-btn info" onclick="findNearbyServices('fire')">🔥 Find Stations</button>
-                </div>
-            </div>
-
-            <div class="emergency-card">
-                <div class="card-header">
-                    <div class="card-icon">🌍</div>
-                    <div class="card-title">Embassy Services</div>
-                </div>
-                <p>Contact embassy and consular services for international emergencies</p>
-                <div class="action-buttons">
-                    <button class="action-btn info" onclick="findEmbassy()">🏛️ Find Embassy</button>
-                    <button class="action-btn info" onclick="translateSOS()">🗣️ Translate SOS</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h3>👨‍👩‍👧‍👦 Family Emergency Contacts</h3>
-            <div class="contact-list" id="familyContacts">
-                <div class="contact-item">
-                    <div class="contact-info">
-                        <div class="contact-name">Sarah Johnson</div>
-                        <div class="contact-relation">Spouse</div>
-                    </div>
-                    <div class="contact-actions">
-                        <button class="contact-btn-small" onclick="callContact('Sarah Johnson')">📞 Call</button>
-                        <button class="contact-btn-small track" onclick="trackContact('Sarah Johnson')">📍 Track</button>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-info">
-                        <div class="contact-name">Mom (Betty Johnson)</div>
-                        <div class="contact-relation">Mother</div>
-                    </div>
-                    <div class="contact-actions">
-                        <button class="contact-btn-small" onclick="callContact('Mom')">📞 Call</button>
-                        <button class="contact-btn-small track" onclick="trackContact('Mom')">📍 Track</button>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-info">
-                        <div class="contact-name">Dr. Smith</div>
-                        <div class="contact-relation">Family Doctor</div>
-                    </div>
-                    <div class="contact-actions">
-                        <button class="contact-btn-small" onclick="callContact('Dr. Smith')">📞 Call</button>
-                        <button class="contact-btn-small info" onclick="viewContactInfo('Dr. Smith')">ℹ️ Info</button>
-                    </div>
-                </div>
-            </div>
-            <button class="add-contact" onclick="addNewContact()">➕ Add New Emergency Contact</button>
-        </div>
+    <div class="app-title">
+        CareZiaSpace - Digital Emergency
     </div>
 
-    <!-- Contact Modal -->
-    <div id="contactModal" class="modal">
+    <div class="gps-status">
+        <span class="gps-indicator"></span>
+        <strong>GPS Active:</strong> Your location is being tracked for emergency services
+        <br><small id="location-display">Knoxville, TN • Ready for emergency dispatch</small>
+    </div>
+
+    <div class="emergency-container">
+        <button class="emergency-btn btn-call" onclick="call911()">
+            📞 CALL 911
+            <div class="btn-description">Immediate emergency response</div>
+        </button>
+
+        <button class="emergency-btn btn-location" onclick="shareLocation()">
+            📍 SHARE MY LOCATION
+            <div class="btn-description">GPS coordinates to family & 911</div>
+        </button>
+
+        <button class="emergency-btn btn-family" onclick="showFamilyModal()">
+            👨‍👩‍👧‍👦 FAMILY EMERGENCY ALERT
+            <div class="btn-description">Notify all family members</div>
+        </button>
+
+        <button class="emergency-btn btn-medical" onclick="medicalEmergency()">
+            🏥 MEDICAL EMERGENCY
+            <div class="btn-description">Medical ID & ambulance request</div>
+        </button>
+
+        <button class="emergency-btn btn-international" onclick="internationalEmergency()">
+            🌍 INTERNATIONAL EMERGENCY
+            <div class="btn-description">Global emergency services (25+ countries)</div>
+        </button>
+    </div>
+
+    <!-- Family Management Modal -->
+    <div id="familyModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('contactModal')">&times;</span>
-            <h2>Contact Emergency Remote Support</h2>
-            <p><strong>24/7 Crisis Support:</strong> +1-800-EMERGENCY</p>
-            <p><strong>Technical Support:</strong> support@careziaspace.com</p>
-            <p><strong>Website:</strong> careziaspace.com</p>
-            <br>
-            <p>🌐 Available in 20+ languages</p>
-            <p>🚨 Instant emergency response</p>
-            <p>📍 GPS location services</p>
+            <span class="close" onclick="closeModal('familyModal')">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 30px; color: #27ae60;">👨‍👩‍👧‍👦 Family Emergency Contacts</h2>
+            
+            <div class="family-list" id="familyList">
+                <!-- Family members will be loaded here -->
+            </div>
+            
+            <button class="add-family-btn" onclick="showAddFamilyForm()">➕ Add New Family Member</button>
         </div>
     </div>
+
+    <!-- Add Family Member Modal -->
+    <div id="addFamilyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addFamilyModal')">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 30px; color: #f39c12;">➕ Add Family Member</h2>
+            
+            <form id="familyForm" onsubmit="saveFamilyMember(event)">
+                <div class="form-group">
+                    <label for="memberName">Full Name</label>
+                    <input type="text" id="memberName" name="name" placeholder="Enter full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="memberRelation">Relationship</label>
+                    <select id="memberRelation" name="relation" required>
+                        <option value="">Select relationship</option>
+                        <option value="Spouse">Spouse</option>
+                        <option value="Parent">Parent</option>
+                        <option value="Child">Child</option>
+                        <option value="Sibling">Brother/Sister</option>
+                        <option value="Grandparent">Grandparent</option>
+                        <option value="Friend">Friend</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Emergency Contact">Emergency Contact</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="memberPhone">Phone Number</label>
+                    <input type="tel" id="memberPhone" name="phone" placeholder="(555) 123-4567" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="memberEmail">Email (Optional)</label>
+                    <input type="email" id="memberEmail" name="email" placeholder="email@example.com">
+                </div>
+                
+                <button type="submit" class="save-btn">💾 Save Contact</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- International Emergency Modal -->
+    <div id="internationalModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('internationalModal')">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 30px; color: #1abc9c;">🌍 International Emergency Services</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                <button onclick="selectCountry('US', '911')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇺🇸<br>USA<br>911</button>
+                <button onclick="selectCountry('CA', '911')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇨🇦<br>Canada<br>911</button>
+                <button onclick="selectCountry('UK', '999')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇬🇧<br>UK<br>999</button>
+                <button onclick="selectCountry('AU', '000')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇦🇺<br>Australia<br>000</button>
+                <button onclick="selectCountry('DE', '112')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇩🇪<br>Germany<br>112</button>
+                <button onclick="selectCountry('FR', '112')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇫🇷<br>France<br>112</button>
+                <button onclick="selectCountry('JP', '110')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇯🇵<br>Japan<br>110</button>
+                <button onclick="selectCountry('IN', '112')" style="background: #3498db; color: white; border: none; padding: 15px 10px; border-radius: 10px; cursor: pointer;">🇮🇳<br>India<br>112</button>
+            </div>
+            
+            <div style="margin-top: 30px; text-align: center;">
+                <button onclick="translateSOS()" style="background: #f39c12; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: 600;">🗣️ Translate Emergency Phrases</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="platform-link" onclick="openFullPlatform()">
+        🌟 Full Platform
+    </a>
 
     <script>
-        let currentCountry = 'US';
-        
-        const emergencyNumbers = {
-            'US': '911',
-            'CA': '911', 
-            'UK': '999',
-            'AU': '000',
-            'DE': '112',
-            'FR': '112',
-            'JP': '110',
-            'IN': '112'
-        };
+        // Family members storage
+        let familyMembers = JSON.parse(localStorage.getItem('familyMembers')) || [
+            {
+                id: 1,
+                name: 'Sarah Johnson',
+                relation: 'Spouse',
+                phone: '(865) 555-0001',
+                email: 'sarah@email.com'
+            },
+            {
+                id: 2,
+                name: 'Mom (Betty Johnson)',
+                relation: 'Parent',
+                phone: '(865) 555-0002',
+                email: 'mom@email.com'
+            }
+        ];
 
-        const countryNames = {
-            'US': 'United States',
-            'CA': 'Canada',
-            'UK': 'United Kingdom', 
-            'AU': 'Australia',
-            'DE': 'Germany',
-            'FR': 'France',
-            'JP': 'Japan',
-            'IN': 'India'
-        };
+        let currentLocation = { lat: 35.9606, lng: -83.9207 };
+        let editingMemberId = null;
 
-        function selectCountry(country) {
-            // Update active button
-            document.querySelectorAll('.country-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[data-country="${country}"]`).classList.add('active');
-            
-            currentCountry = country;
-            updateEmergencyNumbers();
-            showNotification(`Switched to ${countryNames[country]}. Emergency number: ${emergencyNumbers[country]}`);
-        }
-
-        function updateEmergencyNumbers() {
-            const emergencyNumber = emergencyNumbers[currentCountry];
-            document.querySelectorAll('.action-btn.emergency').forEach(btn => {
-                if (btn.textContent.includes('Call')) {
-                    btn.onclick = () => callEmergency(emergencyNumber);
-                }
-            });
-        }
-
-        function callEmergency(number) {
-            if (confirm(`This will attempt to call ${number}. Are you sure this is an emergency?`)) {
-                // In a real app, this would initiate the call
-                showNotification(`Calling ${number}... GPS location shared with emergency services.`);
-                // For demonstration purposes
-                window.open(`tel:${number}`);
+        // Emergency functions
+        function call911() {
+            if (confirm('🚨 This will call 911 Emergency Services. Continue only if you have a real emergency.')) {
+                showNotification('🚨 Calling 911... GPS location shared with emergency services', 'emergency');
+                shareLocationWithEmergency();
+                window.open('tel:911');
             }
         }
 
-        function findNearbyServices(type) {
-            showNotification(`Finding nearest ${type} services in ${countryNames[currentCountry]}...`);
-            
-            // Simulate Google Maps integration
-            setTimeout(() => {
-                const services = {
-                    'police': ['Knoxville Police Department (0.5 mi)', 'Knox County Sheriff (1.2 mi)', 'University of Tennessee Police (0.8 mi)'],
-                    'hospital': ['University of Tennessee Medical Center (1.1 mi)', 'East Tennessee Children\'s Hospital (1.5 mi)', 'Parkwest Medical Center (3.2 mi)'],
-                    'fire': ['Knoxville Fire Department Station 1 (0.3 mi)', 'Station 15 (0.7 mi)', 'Station 8 (1.1 mi)']
-                };
-                
-                alert(`Nearest ${type} services:\n\n${services[type].join('\n')}\n\nTap any location to get directions via Google Maps.`);
-            }, 1500);
+        function shareLocation() {
+            if (navigator.geolocation) {
+                showNotification('📍 Getting your precise location...', 'info');
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        currentLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        
+                        const locationText = `📍 EMERGENCY LOCATION SHARE\n\nGPS Coordinates:\nLatitude: ${currentLocation.lat}\nLongitude: ${currentLocation.lng}\n\nGoogle Maps Link:\nhttps://maps.google.com?q=${currentLocation.lat},${currentLocation.lng}\n\nTime: ${new Date().toLocaleString()}\nShared by: Emergency Remote`;
+                        
+                        if (navigator.share) {
+                            navigator.share({
+                                title: '🚨 Emergency Location Share',
+                                text: locationText
+                            });
+                        } else {
+                            navigator.clipboard.writeText(locationText).then(() => {
+                                showNotification('📍 Location copied to clipboard! Share with family & emergency services', 'success');
+                            });
+                        }
+                        
+                        updateLocationDisplay();
+                        notifyFamilyMembers('location');
+                    },
+                    function() {
+                        showNotification('⚠️ Using approximate location. Enable GPS for precise coordinates.', 'warning');
+                        notifyFamilyMembers('location');
+                    }
+                );
+            } else {
+                showNotification('📍 Sharing approximate location...', 'info');
+                notifyFamilyMembers('location');
+            }
         }
 
-        function findEmbassy() {
-            showNotification(`Finding ${countryNames[currentCountry]} embassy/consulate services...`);
-            setTimeout(() => {
-                alert(`Embassy Services for ${countryNames[currentCountry]}:\n\n• Emergency Consular Services: Available 24/7\n• Lost Passport Assistance\n• Legal Aid Referrals\n• Translation Services\n• Citizen Services\n\nContact: embassy.emergency@gov`);
-            }, 1000);
+        function shareLocationWithEmergency() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    currentLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    updateLocationDisplay();
+                    showNotification('📍 Precise GPS coordinates shared with 911', 'success');
+                });
+            }
+        }
+
+        function showFamilyModal() {
+            loadFamilyMembers();
+            document.getElementById('familyModal').style.display = 'block';
+        }
+
+        function loadFamilyMembers() {
+            const familyList = document.getElementById('familyList');
+            familyList.innerHTML = '';
+
+            if (familyMembers.length === 0) {
+                familyList.innerHTML = '<p style="text-align: center; opacity: 0.7;">No family members added yet. Add your first emergency contact below.</p>';
+                return;
+            }
+
+            familyMembers.forEach(member => {
+                const memberElement = document.createElement('div');
+                memberElement.className = 'family-member';
+                memberElement.innerHTML = `
+                    <div class="member-info">
+                        <div class="member-name">${member.name}</div>
+                        <div class="member-relation">${member.relation} • ${member.phone}</div>
+                    </div>
+                    <div class="member-actions">
+                        <button class="action-btn" onclick="callMember('${member.phone}', '${member.name}')">📞</button>
+                        <button class="action-btn" onclick="alertMember(${member.id})">🚨</button>
+                        <button class="action-btn" onclick="editMember(${member.id})">✏️</button>
+                        <button class="action-btn delete" onclick="deleteMember(${member.id})">🗑️</button>
+                    </div>
+                `;
+                familyList.appendChild(memberElement);
+            });
+        }
+
+        function showAddFamilyForm() {
+            editingMemberId = null;
+            document.getElementById('familyForm').reset();
+            document.getElementById('addFamilyModal').style.display = 'block';
+            document.querySelector('#addFamilyModal h2').textContent = '➕ Add Family Member';
+        }
+
+        function editMember(id) {
+            const member = familyMembers.find(m => m.id === id);
+            if (!member) return;
+
+            editingMemberId = id;
+            document.getElementById('memberName').value = member.name;
+            document.getElementById('memberRelation').value = member.relation;
+            document.getElementById('memberPhone').value = member.phone;
+            document.getElementById('memberEmail').value = member.email || '';
+            
+            document.getElementById('addFamilyModal').style.display = 'block';
+            document.querySelector('#addFamilyModal h2').textContent = '✏️ Edit Family Member';
+        }
+
+        function saveFamilyMember(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const memberData = {
+                name: formData.get('name'),
+                relation: formData.get('relation'),
+                phone: formData.get('phone'),
+                email: formData.get('email')
+            };
+
+            if (editingMemberId) {
+                // Update existing member
+                const index = familyMembers.findIndex(m => m.id === editingMemberId);
+                if (index !== -1) {
+                    familyMembers[index] = { ...familyMembers[index], ...memberData };
+                    showNotification(`✏️ ${memberData.name} updated successfully!`, 'success');
+                }
+            } else {
+                // Add new member
+                const newMember = {
+                    id: Date.now(),
+                    ...memberData
+                };
+                familyMembers.push(newMember);
+                showNotification(`➕ ${memberData.name} added to emergency contacts!`, 'success');
+            }
+
+            // Save to localStorage
+            localStorage.setItem('familyMembers', JSON.stringify(familyMembers));
+            
+            // Refresh the family list and close modal
+            loadFamilyMembers();
+            closeModal('addFamilyModal');
+        }
+
+        function deleteMember(id) {
+            const member = familyMembers.find(m => m.id === id);
+            if (member && confirm(`Remove ${member.name} from emergency contacts?`)) {
+                familyMembers = familyMembers.filter(m => m.id !== id);
+                localStorage.setItem('familyMembers', JSON.stringify(familyMembers));
+                loadFamilyMembers();
+                showNotification(`🗑️ ${member.name} removed from emergency contacts`, 'info');
+            }
+        }
+
+        function callMember(phone, name) {
+            if (confirm(`Call ${name} at ${phone}?`)) {
+                window.open(`tel:${phone}`);
+                showNotification(`📞 Calling ${name}...`, 'info');
+            }
+        }
+
+        function alertMember(id) {
+            const member = familyMembers.find(m => m.id === id);
+            if (member) {
+                showNotification(`🚨 Emergency alert sent to ${member.name}`, 'emergency');
+                
+                // Simulate sending emergency alert
+                const alertMessage = `🚨 EMERGENCY ALERT 🚨\n\nYour family member needs help!\n\nLocation: ${currentLocation.lat}, ${currentLocation.lng}\nTime: ${new Date().toLocaleString()}\n\nPlease call them immediately or contact emergency services.`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: '🚨 Emergency Alert',
+                        text: alertMessage
+                    });
+                }
+            }
+        }
+
+        function notifyFamilyMembers(type) {
+            if (familyMembers.length === 0) {
+                showNotification('⚠️ No family members to notify. Add contacts first.', 'warning');
+                return;
+            }
+
+            const messageType = type === 'location' ? 'Location Share' : 'Emergency Alert';
+            showNotification(`📱 ${messageType} sent to ${familyMembers.length} family members`, 'success');
+        }
+
+        function medicalEmergency() {
+            const medicalInfo = `🏥 MEDICAL EMERGENCY\n\n📋 Medical ID:\n• Blood Type: O+\n• Allergies: None known\n• Medications: None\n• Emergency Contact: ${familyMembers[0]?.name || 'Not set'}\n• Location: ${currentLocation.lat}, ${currentLocation.lng}`;
+            
+            if (confirm('🏥 This will call for medical emergency assistance and share your medical ID. Continue?')) {
+                showNotification('🚑 Requesting ambulance... Medical ID shared', 'emergency');
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(medicalInfo);
+                }
+                
+                setTimeout(() => {
+                    window.open('tel:911');
+                }, 1000);
+            }
+        }
+
+        function internationalEmergency() {
+            document.getElementById('internationalModal').style.display = 'block';
+        }
+
+        function selectCountry(country, number) {
+            if (confirm(`Call ${country} emergency services (${number})?`)) {
+                showNotification(`📞 Calling ${country} emergency: ${number}`, 'emergency');
+                window.open(`tel:${number}`);
+                closeModal('internationalModal');
+            }
         }
 
         function translateSOS() {
-            const sosTranslations = {
-                'US': 'HELP! EMERGENCY!',
-                'CA': 'HELP! EMERGENCY!',
-                'UK': 'HELP! EMERGENCY!',
-                'AU': 'HELP! EMERGENCY!',
-                'DE': 'HILFE! NOTFALL!',
-                'FR': 'AIDE! URGENCE!',
-                'JP': '助けて！緊急事態！',
-                'IN': 'मदद! आपातकाल!'
+            const translations = {
+                'English': 'HELP! EMERGENCY!',
+                'Spanish': '¡AYUDA! ¡EMERGENCIA!',
+                'French': 'AIDE! URGENCE!',
+                'German': 'HILFE! NOTFALL!',
+                'Italian': 'AIUTO! EMERGENZA!',
+                'Portuguese': 'AJUDA! EMERGÊNCIA!',
+                'Japanese': '助けて！緊急事態！',
+                'Chinese': '救命！紧急情况！',
+                'Arabic': 'مساعدة! حالة طوارئ!',
+                'Russian': 'ПОМОЩЬ! ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ!'
             };
-            
-            alert(`SOS in ${countryNames[currentCountry]}:\n\n"${sosTranslations[currentCountry]}"\n\nShow this message to locals for help.`);
-        }
 
-        function callContact(name) {
-            showNotification(`Calling ${name}... Location shared automatically.`);
-            // In a real app, this would call the contact
-        }
-
-        function trackContact(name) {
-            showNotification(`Requesting GPS location from ${name}...`);
-            setTimeout(() => {
-                alert(`${name}'s Location:\n\n📍 Main Street, Downtown Knoxville\nLast updated: Just now\n\n🗺️ Open in Maps for directions`);
-            }, 2000);
-        }
-
-        function viewContactInfo(name) {
-            alert(`${name} - Contact Information:\n\n📞 Phone: (865) 555-0123\n🏥 Practice: Knoxville Family Medicine\n📍 Address: 123 Medical Plaza\n\n⚕️ Specialties: Family Medicine, Emergency Care`);
-        }
-
-        function addNewContact() {
-            const name = prompt("Enter contact name:");
-            const relation = prompt("Enter relationship (e.g., Brother, Friend, Doctor):");
-            const phone = prompt("Enter phone number:");
-            
-            if (name && relation && phone) {
-                const contactList = document.getElementById('familyContacts');
-                const newContact = document.createElement('div');
-                newContact.className = 'contact-item';
-                newContact.innerHTML = `
-                    <div class="contact-info">
-                        <div class="contact-name">${name}</div>
-                        <div class="contact-relation">${relation}</div>
-                    </div>
-                    <div class="contact-actions">
-                        <button class="contact-btn-small" onclick="callContact('${name}')">📞 Call</button>
-                        <button class="contact-btn-small track" onclick="trackContact('${name}')">📍 Track</button>
-                    </div>
-                `;
-                contactList.appendChild(newContact);
-                showNotification(`${name} added to emergency contacts!`);
-            }
-        }
-
-        function showContactModal() {
-            document.getElementById('contactModal').style.display = 'block';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function showNotification(message) {
-            // Simple notification system
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #27ae60, #219a52);
-                color: white;
-                padding: 15px 20px;
-                border-radius: 10px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-                z-index: 10000;
-                max-width: 300px;
-                font-weight: 600;
-                backdrop-filter: blur(10px);
-                animation: slideIn 0.3s ease;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            // Add animation keyframes
-            if (!document.getElementById('notificationStyles')) {
-                const style = document.createElement('style');
-                style.id = 'notificationStyles';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        }
-
-        // Initialize GPS tracking simulation
-        function updateGPSLocation() {
-            // Simulate GPS updates
-            const coords = [
-                { lat: 35.9606, lng: -83.9207, desc: "University of Tennessee, Knoxville" },
-                { lat: 35.9640, lng: -83.9186, desc: "Downtown Knoxville" },
-                { lat: 35.9500, lng: -83.9300, desc: "West Knoxville" }
-            ];
-            
-            let index = 0;
-            setInterval(() => {
-                const coord = coords[index % coords.length];
-                const gpsInfo = document.querySelector('.gps-info small');
-                if (gpsInfo) {
-                    gpsInfo.textContent = `Lat: ${coord.lat}° N, Long: ${coord.lng}° W (${coord.desc})`;
-                }
-                index++;
-            }, 10000);
-        }
-
-        // Start GPS simulation
-        updateGPSLocation();
-
-        // Show welcome message
-        setTimeout(() => {
-            showNotification('Emergency Remote activated! Your safety is our priority. 🛡️');
-        }, 1000);
-    </script>
-</body>
-</html>
+            let message = '🆘 EMERGENCY PHRASES
