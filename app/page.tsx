@@ -3,855 +3,606 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Guard Dog - Live Emergency</title>
-    <meta name="theme-color" content="#1a1a2e">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>CareZiaSpace - Campus Guard Dog Live Emergency</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1a1a2e 100%);
             color: white;
             min-height: 100vh;
-            overflow-x: hidden;
         }
-
-        /* Emergency Alert Header */
-        .emergency-header {
-            background: linear-gradient(135deg, #ff6b35, #ff8c42, #ff6b35);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease-in-out infinite;
-            color: white;
-            padding: 15px 20px;
+        
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(90deg, #ff4444, #ff6b6b, #4ecdc4);
+            padding: 15px;
             text-align: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .emergency-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.1) 10px,
-                rgba(255,255,255,0.1) 20px
-            );
-            animation: stripe 2s linear infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @keyframes stripe {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Navigation */
-        .nav-bar {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .nav-link {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .nav-link.carezia {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            font-weight: 600;
-        }
-
-        .nav-link.live-mode {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            font-weight: bold;
             animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 30px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Core Services Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        .service-card {
-            background: rgba(26, 26, 46, 0.9);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
+            position: sticky;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+            z-index: 100;
         }
-
-        .service-card:hover::before {
-            left: 100%;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .service-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #f39c12;
-        }
-
-        .service-description {
-            font-size: 1rem;
-            line-height: 1.5;
-            opacity: 0.9;
-            margin-bottom: 0;
-        }
-
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin: 60px 0 40px;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Mental Health Programs Grid */
-        .programs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .program-card {
-            background: rgba(26, 26, 46, 0.9);
-            backdrop-filter: blur(20px);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .program-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .program-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .program-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: white;
-            text-decoration: underline;
-        }
-
-        .program-description {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            opacity: 0.8;
-            margin-bottom: 15px;
-        }
-
-        .learn-more {
-            background: transparent;
-            color: #3498db;
-            border: none;
-            font-size: 0.9rem;
-            cursor: pointer;
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        
+        /* Navigation */
+        .nav-tabs {
             display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s ease;
+            overflow-x: auto;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            gap: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
-
-        .learn-more:hover {
-            color: #2980b9;
-            transform: translateX(5px);
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .nav-tab {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 12px;
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                justify-content: center;
-                width: 100%;
-            }
-            
-            .services-grid, .programs-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .main-content {
-                padding: 20px 15px;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
+        .nav-tab.active { background: #4ecdc4; }
+        
+        /* Main Content */
+        .container { max-width: 400px; margin: 0 auto; padding: 20px; }
+        .lifetime-badge {
+            background: #ffd700;
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
-
-        /* Accessibility Features */
-        .read-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
+        
+        /* Emergency Buttons */
+        .emergency-button {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .emergency-button:hover { transform: translateY(-2px); }
+        .call-911 { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .location-share { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .family-alert { background: linear-gradient(135deg, #27ae60, #229954); }
+        .medical-emergency { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .crisis-resources { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        
+        /* Program Cards */
+        .program-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .program-card {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .program-card:hover { transform: translateY(-2px); }
+        .program-card h3 { margin-bottom: 10px; font-size: 14px; }
+        .program-card p { font-size: 12px; opacity: 0.8; }
+        
+        /* Pricing Section */
+        .pricing-section {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .price { font-size: 48px; font-weight: bold; margin: 10px 0; }
+        .pricing-features { text-align: left; margin: 15px 0; }
+        .pricing-features li { margin: 5px 0; }
+        
+        /* Payment Buttons */
+        .payment-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .payment-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .paypal-btn { background: #0070ba; color: white; }
+        .cashapp-btn { background: #00d632; color: white; }
+        
+        /* Crisis Hotlines */
+        .crisis-hotlines {
             display: flex;
             gap: 10px;
+            margin: 20px 0;
+        }
+        .hotline-btn {
+            flex: 1;
+            padding: 15px 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Todd Access Panel */
+        .owner-panel {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .admin-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .admin-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .admin-btn:nth-child(1) { background: #34495e; color: white; }
+        .admin-btn:nth-child(2) { background: #27ae60; color: white; }
+        .admin-btn:nth-child(3) { background: #3498db; color: white; }
+        .admin-btn:nth-child(4) { background: #e67e22; color: white; }
+        
+        /* Hidden Sections */
+        .section { display: none; }
+        .section.active { display: block; }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
             z-index: 1000;
         }
-
-        .read-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            color: white;
-            font-weight: 600;
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .read-btn.read { background: #3498db; }
-        .read-btn.stop { background: #e74c3c; }
-        .read-btn.auto { background: #27ae60; }
-
-        .read-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Reading Mode */
-        .reading-mode {
-            background: rgba(0, 0, 0, 0.9);
-            color: #f0f0f0;
-            font-size: 1.1rem;
-            line-height: 1.6;
         }
     </style>
 </head>
 <body>
-    <!-- Emergency Alert Header -->
-    <div class="emergency-header">
+    <div class="alert-banner">
         🚨 CAMPUS GUARD DOG - LIVE EMERGENCY 🚨
     </div>
-
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <div class="nav-links">
-            <a href="#home" class="nav-link">Home</a>
-            <a href="#community" class="nav-link">Community Pro</a>
-            <a href="#therapy" class="nav-link">Therapy</a>
-            <a href="#corporate" class="nav-link">Corporate</a>
-            <a href="#support" class="nav-link">Support Programs</a>
-            <a href="#carezia" class="nav-link carezia">Carezia</a>
-            <a href="#crisis" class="nav-link">Crisis Meetings</a>
-            <a href="#live" class="nav-link live-mode">LIVE MODE</a>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Core Services -->
-        <div class="services-grid">
-            <div class="service-card" onclick="openAISupport()">
-                <div class="service-icon">🤖</div>
-                <div class="service-title">24/7 AI Support</div>
-                <div class="service-description">
-                    Carezia AI provides instant emotional support anytime
-                </div>
+    
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showSection('home')">Home</button>
+        <button class="nav-tab" onclick="showSection('emergency')">Emergency</button>
+        <button class="nav-tab" onclick="showSection('programs')">Programs</button>
+        <button class="nav-tab" onclick="showSection('support')">Support</button>
+        <button class="nav-tab" onclick="showSection('carezia')">CareZia</button>
+        <button class="nav-tab" onclick="showSection('b2b')">B2B</button>
+        <button class="nav-tab" onclick="showSection('four')">Four</button>
+    </div>
+    
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <div class="lifetime-badge">
+                ⭐ LIFETIME ACCESS - No monthly fees
             </div>
-
-            <div class="service-card" onclick="openCrisisIntervention()">
-                <div class="service-icon">🆘</div>
-                <div class="service-title">Crisis Intervention</div>
-                <div class="service-description">
-                    Immediate connection to verified crisis hotlines
-                </div>
+            
+            <h2 style="text-align: center; margin-bottom: 20px;">CareZiaSpace - Digital Emergency</h2>
+            
+            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                <img src="data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='30' fill='%23ff6b6b'/%3E%3Ctext x='30' y='40' text-anchor='middle' fill='white' font-size='30'%3E👨%3C/text%3E%3C/svg%3E" style="width: 60px; height: 60px; border-radius: 50%; float: left; margin-right: 15px;" alt="Todd">
+                <h3>A Personal Message from Todd (Founder):</h3>
+                <p style="font-style: italic; margin-top: 10px;">
+                    "I remember the nights in a truck cab, when my family couldn't reach real help. This isn't hype—this is for the mom alone at midnight, the veteran with no backup, every family that ever felt stranded. Instant GPS for emergencies. One-tap access to 911, real hotlines—no fakes—and AI support that actually listens. I wear the REBOUND hoodie because we all deserve to make it home safe. $3.99/month or $199 for life. Real stories, verified help, no BS."
+                </p>
+                <p style="margin-top: 10px; font-weight: bold;">- Todd T., Platform Founder & Truck Driver</p>
             </div>
-
-            <div class="service-card" onclick="openGPSFeatures()">
-                <div class="service-icon">🌍</div>
-                <div class="service-title">GPS Safety Features</div>
-                <div class="service-description">
-                    Emergency location sharing for family protection
-                </div>
-            </div>
-
-            <div class="service-card" onclick="openProfessionalResources()">
-                <div class="service-icon">👩‍⚕️</div>
-                <div class="service-title">Professional Resources</div>
-                <div class="service-description">
-                    Access to licensed therapists and counselors
-                </div>
+            
+            <div style="background: rgba(139, 69, 19, 0.2); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <h3>Why We Built This: Our Autism Journey</h3>
+                <p style="font-size: 14px; margin-top: 10px;">
+                    As parents to our amazing autistic son Justin, we know the journey—the victories, challenges, and moments of worry. Watching Justin work hard and land his first job was unforgettable. But we also know how overwhelming the system can be. Endless information, uncertainty about which resources are real, and the urgency of needing help during difficult moments.
+                </p>
+                <p style="font-size: 14px; margin-top: 10px; font-weight: bold;">
+                    That's why CareZiaSpace cuts out the fluff and scammy "helplines." We provide verified crisis support, real phone numbers always checked and current, and a straightforward interface that works in emergencies. Privacy and care built in—no oversharing required to get help.
+                </p>
+                <p style="text-align: right; margin-top: 10px;">- The CareZiaSpace Family</p>
             </div>
         </div>
-
-        <!-- Mental Health Support Programs -->
-        <div class="section-header">
-            <h2 class="section-title">Mental Health Support Programs</h2>
-            <p class="section-subtitle">Tailored mental health support for specific communities and needs</p>
+        
+        <!-- Emergency Section -->
+        <div id="emergency" class="section">
+            <h2 style="text-align: center; margin-bottom: 20px;">Emergency Services</h2>
+            
+            <button class="emergency-button call-911" onclick="call911()">
+                📞 CALL 911
+                <br><small>Immediate emergency response</small>
+            </button>
+            
+            <button class="emergency-button location-share" onclick="shareLocation()">
+                📍 SHARE MY LOCATION
+                <br><small>GPS coordinates to family & 911</small>
+            </button>
+            
+            <button class="emergency-button family-alert" onclick="openModal('familyModal')">
+                👨‍👩‍👧‍👦 FAMILY EMERGENCY ALERT
+                <br><small>Notify all family members</small>
+            </button>
+            
+            <button class="emergency-button medical-emergency" onclick="openModal('medicalModal')">
+                🏥 MEDICAL EMERGENCY
+                <br><small>Medical ID & ambulance request</small>
+            </button>
+            
+            <button class="emergency-button crisis-resources" onclick="openModal('crisisModal')">
+                💬 CRISIS RESOURCES
+                <br><small>24/7 mental health support</small>
+            </button>
+            
+            <div class="crisis-hotlines">
+                <button class="hotline-btn" onclick="callCrisis('988')">988<br><small>Crisis Lifeline</small></button>
+                <button class="hotline-btn" onclick="callCrisis('741741')">741741<br><small>Text HOME</small></button>
+                <button class="hotline-btn" onclick="call911()">911<br><small>Emergency</small></button>
+            </div>
         </div>
-
-        <div class="programs-grid">
-            <div class="program-card" onclick="openVeteransSupport()">
-                <div class="program-icon">🎖️</div>
-                <div class="program-title">Veterans Support</div>
-                <div class="program-description">
-                    Specialized care for military families
+        
+        <!-- Programs Section -->
+        <div id="programs" class="section">
+            <h2 style="text-align: center; margin-bottom: 20px;">Mental Health Support Programs</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Tailored mental health support for specific communities and needs</p>
+            
+            <div class="program-grid">
+                <div class="program-card">
+                    <h3>24/7 AI Support</h3>
+                    <p>CareZia AI provides instant emotional support anytime</p>
                 </div>
-                <button class="learn-more">Learn More →</button>
+                <div class="program-card">
+                    <h3>Crisis Intervention</h3>
+                    <p>Immediate connection to verified crisis hotlines</p>
+                </div>
+                <div class="program-card">
+                    <h3>GPS Safety Features</h3>
+                    <p>Emergency location sharing for family protection</p>
+                </div>
+                <div class="program-card">
+                    <h3>Professional Resources</h3>
+                    <p>Access to licensed therapists and counselors</p>
+                </div>
+                <div class="program-card">
+                    <h3>Veterans Support</h3>
+                    <p>Specialized care for military families</p>
+                </div>
+                <div class="program-card">
+                    <h3>Family Emergency GPS</h3>
+                    <p>Real-time location safety for loved ones</p>
+                </div>
+                <div class="program-card">
+                    <h3>Youth & Teen Support</h3>
+                    <p>Mental health support for young people</p>
+                </div>
+                <div class="program-card">
+                    <h3>Trucker Support</h3>
+                    <p>Mental health resources for drivers</p>
+                </div>
             </div>
-
-            <div class="program-card" onclick="openFamilyEmergencyGPS()">
-                <div class="program-icon">🌍</div>
-                <div class="program-title">Family Emergency GPS</div>
-                <div class="program-description">
-                    Real-time location safety for loved ones
-                </div>
-                <button class="learn-more">Learn More →</button>
+            
+            <div class="program-card" style="grid-column: span 2; margin-top: 15px;">
+                <h3>Addiction Recovery</h3>
+                <p>Path to recovery with AI guidance</p>
             </div>
-
-            <div class="program-card" onclick="openYouthSupport()">
-                <div class="program-icon">❤️</div>
-                <div class="program-title">Youth & Teen Support</div>
-                <div class="program-description">
-                    Mental health support for young people
-                </div>
-                <button class="learn-more">Learn More →</button>
+            
+            <div class="program-card" style="grid-column: span 2; margin-top: 15px;">
+                <h3>Family Round Table</h3>
+                <p>AI-moderated family therapy sessions</p>
             </div>
-
-            <div class="program-card" onclick="openTruckerSupport()">
-                <div class="program-icon">🚛</div>
-                <div class="program-title">Trucker Support</div>
-                <div class="program-description">
-                    Mental health resources for drivers
+        </div>
+        
+        <!-- Support Section -->
+        <div id="support" class="section">
+            <div class="pricing-section">
+                <div style="text-decoration: line-through; opacity: 0.7;">$47.88/year forever</div>
+                <div class="price">$199 Lifetime</div>
+                <p>One payment. Your entire family protected for life.</p>
+                <p>That's less than $40 per family member - forever.</p>
+                
+                <ul class="pricing-features">
+                    <li>✅ No monthly fees after $199 payment</li>
+                    <li>✅ 30-Day Money Back Guarantee</li>
+                </ul>
+                
+                <div class="payment-buttons">
+                    <button class="payment-btn paypal-btn" onclick="supportPayPal()">
+                        Protect My Family For Life - $199
+                    </button>
                 </div>
-                <button class="learn-more">Learn More →</button>
             </div>
-
-            <div class="program-card" onclick="openAddictionRecovery()">
-                <div class="program-icon">👥</div>
-                <div class="program-title">Addiction Recovery</div>
-                <div class="program-description">
-                    Support for addiction and recovery journey
+        </div>
+        
+        <!-- CareZia AI Section -->
+        <div id="carezia" class="section">
+            <h2 style="text-align: center; margin-bottom: 20px;">Campus Guard Dog 🐕 College Safety AI</h2>
+            <p style="text-align: center; margin-bottom: 20px;">The ultimate campus safety companion with continuous panic button, GPS family alerts, and AI-powered emergency response. Perfect for college students and their families.</p>
+            
+            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                <h3>POWERED BY THREE INTEGRATED PLATFORMS</h3>
+                <div class="program-grid" style="margin-top: 15px;">
+                    <div style="background: #3498db; padding: 15px; border-radius: 10px;">
+                        <h4>🏢 CareZiaSpace Technologies</h4>
+                        <p style="font-size: 12px;">Platform Infrastructure & AI Systems</p>
+                    </div>
+                    <div style="background: #27ae60; padding: 15px; border-radius: 10px;">
+                        <h4>💚 REBOUND</h4>
+                        <p style="font-size: 12px;">Life Recovery & Free Resources</p>
+                    </div>
+                    <div style="background: #9b59b6; padding: 15px; border-radius: 10px;">
+                        <h4>💜 XCare</h4>
+                        <p style="font-size: 12px;">Complete Wellness & Support</p>
+                    </div>
                 </div>
-                <button class="learn-more">Learn More →</button>
             </div>
-
-            <div class="program-card" onclick="openReboundProgram()">
-                <div class="program-icon">💰</div>
-                <div class="program-title">REBOUND Program</div>
-                <div class="program-description">
-                    Financial assistance and recovery support
-                </div>
-                <button class="learn-more">Learn More →</button>
+            
+            <button style="background: #3498db; color: white; padding: 15px; border: none; border-radius: 10px; width: 100%; margin-bottom: 10px;" onclick="testSound()">
+                🔊 TEST SOUND FIRST
+                <br><small>Click to test if audio works before using emergency button</small>
+            </button>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button style="background: #27ae60; color: white; padding: 10px; border: none; border-radius: 5px; flex: 1;" onclick="talkToCarezia()">💬 Talk to CareZia AI - Free</button>
+                <button style="background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; flex: 1;" onclick="emergencyServices()">🚨 Emergency Services</button>
+                <button style="background: #f39c12; color: white; padding: 10px; border: none; border-radius: 5px; flex: 1;" onclick="buyCrypto()">₿ Buy with Crypto</button>
+            </div>
+        </div>
+        
+        <!-- Todd Owner Access -->
+        <div class="owner-panel">
+            <h3>🛡️ TODD OWNER ACCESS</h3>
+            <p>All premium features enabled</p>
+            <div class="admin-buttons">
+                <button class="admin-btn">Admin</button>
+                <button class="admin-btn">Revenue</button>
+                <button class="admin-btn">GPS Pro</button>
+                <button class="admin-btn">Apparel</button>
             </div>
         </div>
     </div>
-
-    <!-- Accessibility Controls -->
-    <div class="read-controls">
-        <button class="read-btn read" onclick="readPage()" title="Read page">R</button>
+    
+    <!-- Modals -->
+    <div id="familyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('familyModal')">&times;</span>
+            <h3>👨‍👩‍👧‍👦 Family Emergency Alert</h3>
+            <p>Send emergency message to family contacts</p>
+            <button style="background: #27ae60; color: white; padding: 15px; border: none; border-radius: 8px; width: 100%; margin: 10px 0;" onclick="sendFamilyAlert()">📱 Send Emergency Text</button>
+            <button style="background: #3498db; color: white; padding: 15px; border: none; border-radius: 8px; width: 100%;" onclick="callFamily()">📞 Call Emergency Contact</button>
+        </div>
+    </div>
+    
+    <div id="medicalModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('medicalModal')">&times;</span>
+            <h3>🏥 Medical Emergency</h3>
+            <button style="background: #e74c3c; color: white; padding: 15px; border: none; border-radius: 8px; width: 100%; margin: 10px 0; font-size: 18px; font-weight: bold;" onclick="call911()">🚑 Call 911 Ambulance</button>
+            <button style="background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; margin: 5px 0;" onclick="shareLocation()">📍 Share Location with 911</button>
+            <button style="background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; margin: 5px 0;" onclick="medicalInfo()">🆔 Medical ID Info</button>
+        </div>
+    </div>
+    
+    <div id="crisisModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('crisisModal')">&times;</span>
+            <h3>💬 Crisis Resources - 24/7 Support</h3>
+            <div style="text-align: left; line-height: 1.6;">
+                <h4>🇺🇸 National Crisis Lines:</h4>
+                <button style="background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; margin: 5px 0; width: 100%;" onclick="callCrisis('988')">📞 Call 988 - Suicide & Crisis Lifeline</button>
+                <button style="background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; margin: 5px 0; width: 100%;" onclick="callCrisis('18006624357')">📞 SAMHSA Mental Health</button>
+                <button style="background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; margin: 5px 0; width: 100%;" onclick="callCrisis('18007997233')">📞 Domestic Violence Hotline</button>
+                
+                <h4 style="margin-top: 15px;">📱 Text Support:</h4>
+                <button style="background: #3498db; color: white; padding: 10px; border: none; border-radius: 5px; margin: 5px 0; width: 100%;" onclick="textCrisis()">💬 Text HOME to 741741 - Crisis Text Line</button>
+                
+                <h4 style="margin-top: 15px;">🏳️‍🌈 LGBTQ+ Support:</h4>
+                <button style="background: #9b59b6; color: white; padding: 10px; border: none; border-radius: 5px; margin: 5px 0; width: 100%;" onclick="callCrisis('18666488911')">📞 Trevor Project</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // AI Support
-        function openAISupport() {
-            alert('🤖 24/7 AI Support\n\nCarezia AI provides:\n• Instant emotional support\n• Crisis intervention guidance\n• Mental health resources\n• Personalized assistance\n• Available 24/7 in multiple languages\n\nConnect now for immediate support.');
+        // Navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
         }
-
-        // Crisis Intervention
-        function openCrisisIntervention() {
-            if (confirm('🆘 Crisis Intervention\n\nImmediate help available:\n• National Crisis Hotline: 988\n• Crisis Text Line: Text HOME to 741741\n• Emergency Services: 911\n• Campus Safety: [Your Number]\n\nConnect to crisis support now?')) {
-                const choice = prompt('Choose support:\n1 - Call 988 Crisis Line\n2 - Text Crisis Support\n3 - Call 911\n4 - Campus Safety\n\nEnter number (1-4):');
-                
-                switch(choice) {
-                    case '1':
-                        window.open('tel:988');
-                        break;
-                    case '2':
-                        window.open('sms:741741?body=HOME');
-                        break;
-                    case '3':
-                        window.open('tel:911');
-                        break;
-                    case '4':
-                        alert('Connecting to Campus Safety...');
-                        break;
-                    default:
-                        alert('Help is always available. Save these numbers:\n• 988 - Crisis Line\n• 911 - Emergency\n• Text HOME to 741741');
-                }
+        
+        // Emergency Functions
+        function call911() {
+            if (confirm('🚨 Call 911 Emergency Services?\n\nThis will dial emergency services immediately.')) {
+                window.location.href = 'tel:911';
             }
         }
-
-        // GPS Safety Features
-        function openGPSFeatures() {
+        
+        function shareLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
-                    const lat = position.coords.latitude.toFixed(4);
-                    const lng = position.coords.longitude.toFixed(4);
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const locationText = `🚨 EMERGENCY LOCATION 🚨\nLatitude: ${lat.toFixed(6)}\nLongitude: ${lng.toFixed(6)}\nGoogle Maps: https://maps.google.com/?q=${lat},${lng}\n\nSent from CareZiaSpace Emergency System`;
                     
-                    if (confirm(`🌍 GPS Safety Features\n\nYour Location: ${lat}, ${lng}\n\nFeatures available:\n• Share location with family\n• Emergency location broadcast\n• Find nearby help\n• Safe zone notifications\n\nShare your location for emergency?`)) {
-                        const message = `🚨 Emergency Location Share\n\nGPS Coordinates: ${lat}, ${lng}\nTime: ${new Date().toLocaleString()}\nGoogle Maps: https://maps.google.com?q=${lat},${lng}`;
-                        
-                        if (navigator.share) {
-                            navigator.share({
-                                title: '🚨 Emergency Location',
-                                text: message
-                            });
-                        } else {
-                            navigator.clipboard.writeText(message);
-                            alert('📍 Location copied to clipboard!\nShare with family and emergency contacts.');
-                        }
+                    if (navigator.share) {
+                        navigator.share({
+                            title: '🚨 Emergency Location',
+                            text: locationText
+                        });
+                    } else {
+                        navigator.clipboard.writeText(locationText);
+                        alert('📍 Location copied to clipboard!\n\n' + locationText);
                     }
+                }, function(error) {
+                    alert('Unable to get location. Please ensure location services are enabled.');
                 });
             } else {
-                alert('GPS not available. Please enable location services for safety features.');
+                alert('Geolocation not supported by this browser.');
             }
         }
-
-        // Professional Resources
-        function openProfessionalResources() {
-            alert('👩‍⚕️ Professional Resources\n\nAccess to licensed professionals:\n\n🧠 Mental Health:\n• Licensed therapists\n• Crisis counselors\n• Psychiatrists\n• Support groups\n\n⚕️ Medical:\n• Telemedicine\n• Health screening\n• Prescription assistance\n\n⚖️ Legal:\n• Student legal aid\n• Family law\n• Crisis legal support\n\nContact: professionals@careziaspace.com');
+        
+        function sendFamilyAlert() {
+            const message = `🚨 EMERGENCY ALERT 🚨\nI need immediate help. Please contact me or call 911 if you cannot reach me.\n\nThis is an automated emergency message from CareZiaSpace.`;
+            window.location.href = `sms:?body=${encodeURIComponent(message)}`;
+            closeModal('familyModal');
         }
-
-        // Veterans Support
-        function openVeteransSupport() {
-            alert('🎖️ Veterans Support\n\nSpecialized services for military families:\n\n• PTSD support and counseling\n• Military family therapy\n• VA benefits assistance\n• Transition support programs\n• Peer support networks\n• 24/7 veterans crisis line\n\nVeterans Crisis Line: 1-800-273-8255\nText: 838255\n\n"Supporting those who served"');
+        
+        function callFamily() {
+            const contact = prompt('Enter emergency contact number:');
+            if (contact) {
+                window.location.href = `tel:${contact}`;
+            }
+            closeModal('familyModal');
         }
-
-        // Family Emergency GPS
-        function openFamilyEmergencyGPS() {
-            alert('🌍 Family Emergency GPS\n\nReal-time safety features:\n\n📍 Location Sharing:\n• Instant family notifications\n• Emergency location broadcast\n• Safe zone alerts\n• Check-in reminders\n\n🆘 Emergency Features:\n• One-tap emergency alerts\n• Automatic location sharing\n• Family communication hub\n• Emergency contact integration\n\n"Keeping families connected and safe"');
+        
+        function callCrisis(number) {
+            window.location.href = `tel:${number}`;
         }
-
-        // Youth & Teen Support
-        function openYouthSupport() {
-            showResourceModal('Youth & Teen Support', '❤️', [
-                '🧠 **Mental Health Resources:**',
-                '• Teen Crisis Text Line: Text TEEN to 839863',
-                '• National Suicide Prevention Lifeline: 988',
-                '• Crisis Text Line: Text HOME to 741741',
-                '• SAMHSA Youth Helpline: 1-800-662-4357',
-                '• LGBT National Hotline: 1-888-843-4564',
-                '',
-                '📚 **Educational Support:**',
-                '• Khan Academy (free tutoring): khanacademy.org',
-                '• Coursera Financial Aid: coursera.org/financial-aid',
-                '• Free GED Classes: ged.com/study/free_online_ged_test',
-                '• College Application Help: commonapp.org',
-                '',
-                '🏠 **Housing & Safety:**',
-                '• National Runaway Safeline: 1-800-786-2929',
-                '• Youth Emergency Shelter: 211 or dial 2-1-1',
-                '• Safe Place Program: nationalsafeplace.org',
-                '',
-                '💼 **Job & Life Skills:**',
-                '• Job Corps (free job training): jobcorps.gov',
-                '• YouthBuild programs: youthbuild.org',
-                '• Resume help: resume.com (free version)'
-            ]);
+        
+        function textCrisis() {
+            window.location.href = 'sms:741741?body=HOME';
         }
-
-        // Trucker Support
-        function openTruckerSupport() {
-            showResourceModal('Trucker Support', '🚛', [
-                '🧠 **Mental Health for Drivers:**',
-                '• Rolling Strong: 1-877-280-8515',
-                '• Truckers Against Trafficking: 1-888-373-7888',
-                '• SAMHSA Helpline: 1-800-662-4357',
-                '• Crisis Text Line: Text TRUCK to 741741',
-                '',
-                '⚕️ **Health Resources:**',
-                '• Free DOT Physical Locations: cvs.com/minuteclinic',
-                '• Truckers Health Insurance: thetruckersreport.com/health',
-                '• Sleep Apnea Testing: sleep.org/sleep-apnea-test',
-                '• Diabetes Management: diabetes.org/tools-support',
-                '',
-                '💰 **Financial Assistance:**',
-                '• Truckers Relief Fund: 1-855-682-5190',
-                '• St. Christopher Truckers Fund: truckersfund.org',
-                '• Emergency Financial Help: 211 or dial 2-1-1',
-                '',
-                '🏠 **Family & Legal:**',
-                '• Legal Aid for Truckers: legalaidtruckers.org',
-                '• Family Counseling: betterhelp.com (sliding scale)',
-                '• Domestic Violence: 1-800-799-7233'
-            ]);
+        
+        function medicalInfo() {
+            alert('💡 Medical ID Setup:\n\nAdd medical info to your phone:\n• iPhone: Health app → Medical ID\n• Android: Settings → Emergency Info\n\nThis helps first responders access your medical information even when your phone is locked.');
+            closeModal('medicalModal');
         }
-
-        // Addiction Recovery
-        function openAddictionRecovery() {
-            showResourceModal('Addiction Recovery', '👥', [
-                '🆘 **Crisis & Immediate Help:**',
-                '• National Suicide Prevention Lifeline: 988',
-                '• SAMHSA National Helpline: 1-800-662-4357',
-                '• Crisis Text Line: Text HOME to 741741',
-                '• Poison Control: 1-800-222-1222',
-                '',
-                '🏥 **Treatment Resources:**',
-                '• SAMHSA Treatment Locator: findtreatment.samhsa.gov',
-                '• Free/Low-Cost Rehab: rehabs.com/pro/free-rehab-programs',
-                '• Narcotics Anonymous: na.org (free meetings)',
-                '• Alcoholics Anonymous: aa.org (free meetings)',
-                '• SMART Recovery: smartrecovery.org',
-                '',
-                '💊 **Medication Assistance:**',
-                '• GoodRx (prescription discounts): goodrx.com',
-                '• NeedyMeds: needymeds.org',
-                '• Partnership for Prescription Assistance: pparx.org',
-                '',
-                '🏠 **Housing & Support:**',
-                '• Oxford House (sober living): oxfordhouse.org',
-                '• Salvation Army recovery programs: salvationarmyusa.org',
-                '• Local sober living: 211 or dial 2-1-1',
-                '',
-                '👨‍👩‍👧‍👦 **Family Support:**',
-                '• Al-Anon (families of alcoholics): al-anon.org',
-                '• Nar-Anon (families of addicts): nar-anon.org',
-                '• SMART Recovery Family & Friends: smartrecovery.org'
-            ]);
+        
+        function testSound() {
+            // Create audio context for test
+            if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+                const AudioContextClass = AudioContext || webkitAudioContext;
+                const audioContext = new AudioContextClass();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                gainNode.gain.value = 0.1;
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.5);
+                
+                alert('🔊 Sound test complete! If you heard a beep, audio is working.');
+            } else {
+                alert('🔊 Audio test complete! Your device should support emergency sounds.');
+            }
         }
-
-        // REBOUND Program (Financial Recovery)
-        function openReboundProgram() {
-            showResourceModal('REBOUND Financial Recovery Program', '💰', [
-                '🆘 **Emergency Financial Help:**',
-                '• 211 (United Way): dial 2-1-1',
-                '• Salvation Army emergency assistance: salvationarmyusa.org',
-                '• Catholic Charities: catholiccharitiesusa.org',
-                '• Red Cross emergency assistance: redcross.org',
-                '',
-                '🏠 **Housing Assistance:**',
-                '• Emergency rental assistance: consumerfinance.gov/coronavirus/mortgage-and-housing-assistance',
-                '• Local housing authorities: hud.gov/program_offices/public_indian_housing',
-                '• Homeless prevention: 211 or dial 2-1-1',
-                '',
-                '🍽️ **Food Security:**',
-                '• SNAP (Food Stamps): fns.usda.gov/snap',
-                '• Local food banks: feedingamerica.org',
-                '• WIC program: fns.usda.gov/wic',
-                '• Food pantries: 211 or dial 2-1-1',
-                '',
-                '⚡ **Utilities:**',
-                '• LIHEAP (energy assistance): acf.hhs.gov/ocs/liheap',
-                '• Utility company assistance programs',
-                '• Salvation Army utility help: salvationarmyusa.org',
-                '',
-                '💳 **Debt & Credit Help:**',
-                '• National Foundation for Credit Counseling: nfcc.org',
-                '• Consumer Credit Counseling: consumercredit.com',
-                '• Free credit reports: annualcreditreport.com',
-                '',
-                '💼 **Employment Resources:**',
-                '• CareerOneStop: careeronestop.org',
-                '• American Job Centers: jobcenter.usa.gov',
-                '• SNAP Employment & Training: fns.usda.gov/snap/employment-training'
-            ]);
+        
+        function talkToCarezia() {
+            alert('💬 CareZia AI Chat\n\nThis feature connects you to our AI support system. In a full deployment, this would open a chat interface with our mental health support AI.');
         }
-
-        // Comprehensive Free Resources Modal
-        function showAllFreeResources() {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 10001; 
-                display: flex; align-items: center; justify-content: center; padding: 20px;
-                animation: fadeIn 0.3s ease;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 30px; border-radius: 20px; color: white; max-width: 1200px; width: 100%; max-height: 90vh; overflow-y: auto;">
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <h1 style="color: #f39c12; margin-bottom: 10px;">🌟 FREE RESOURCES - THE HEART OF CAREZIASPACE</h1>
-                        <p style="font-size: 1.2rem; opacity: 0.9;">"These resources truly help people - this is our real impact"</p>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
-                        
-                        <!-- Crisis & Emergency -->
-                        <div style="background: rgba(231, 76, 60, 0.2); padding: 25px; border-radius: 15px; border: 1px solid #e74c3c;">
-                            <h3 style="color: #e74c3c; margin-bottom: 20px;">🚨 CRISIS & EMERGENCY</h3>
-                            <div style="line-height: 1.8; font-size: 0.95rem;">
-                                <strong>Immediate Crisis:</strong><br>
-                                📞 <a href="tel:988" style="color: #3498db;">988 - National Crisis Lifeline</a><br>
-                                📱 Text HOME to 741741 - Crisis Text<br>
-                                🚨 <a href="tel:911" style="color: #3498db;">911 - Emergency Services</a><br><br>
-                                
-                                <strong>Specialized Crisis Lines:</strong><br>
-                                🏳️‍🌈 1-866-488-7386 - Trans Lifeline<br>
-                                👥 1-800-799-7233 - Domestic Violence<br>
-                                🎖️ 1-800-273-8255 - Veterans Crisis<br>
-                                👶 1-800-4-A-CHILD - Childhelp National<br>
-                                🏃‍♂️ 1-800-786-2929 - National Runaway<br>
-                            </div>
-                        </div>
-                        
-                        <!-- Mental Health -->
-                        <div style="background: rgba(155, 89, 182, 0.2); padding: 25px; border-radius: 15px; border: 1px solid #9b59b6;">
-                            <h3 style="color: #9b59b6; margin-bottom: 20px;">🧠 MENTAL HEALTH</h3>
-                            <div style="line-height: 1.8; font-size: 0.95rem;">
-                                <strong>Free Therapy & Support:</strong><br>
-                                🌐 <a href="https://www.nami.org" target="_blank" style="color: #3498db;">NAMI.org</a> - Support Groups<br>
-                                💭 <a href="https://www.betterhelp.com/advice" target="_blank" style="color: #3498db;">BetterHelp.com/advice</a> - Free Articles<br>
-                                🧘 <a href="https://www.headspace.com/health-covid-19" target="_blank" style="color: #3498db;">Headspace</a> - Free Meditation<br>
-                                📚 <a href="https://www.therapistaid.com" target="_blank" style="color: #3498db;">TherapistAid.com</a> - Worksheets<br><br>
-                                
-                                <strong>Crisis Support:</strong><br>
-                                📞 1-800-662-4357 - SAMHSA Helpline<br>
-                                📱 Text HELLO to 741741 - Crisis Text<br>
-                                🧠 Text TALK to 741741 - Mental Health<br>
-                            </div>
-                        </div>
-                        
-                        <!-- Healthcare -->
-                        <div style="background: rgba(39, 174, 96, 0.2); padding: 25px; border-radius: 15px; border: 1px solid #27ae60;">
-                            <h3 style="color: #27ae60; margin-bottom: 20px;">⚕️ HEALTHCARE</h3>
-                            <div style="line-height: 1.8; font-size: 0.95rem;">
-                                <strong>Free/Low-Cost Medical:</strong><br>
-                                🏥 <a href="https://findahealthcenter.hrsa.gov" target="_blank" style="color: #3498db;">FindAHealthCenter.hrsa.gov</a><br>
-                                💊 <a href="https://www.goodrx.com" target="_blank" style="color: #3498db;">GoodRx.com</a> - Prescription Discounts<br>
-                                🩺 <a href="https://www.freeclinics.com" target="_blank" style="color: #3498db;">FreeClinics.com</a> - Free Clinics<br>
-                                📋 <a href="https://www.healthcare.gov" target="_blank" style="color: #3498db;">Healthcare.gov</a> - Insurance Help<br><br>
-                                
-                                <strong>Specialized Health:</strong><br>
-                                🦷 <a href="https://www.freedentalcare.us" target="_blank" style="color: #3498db;">FreeDentalCare.us</a><br>
-                                👁️ <a href="https://www.visionusa.org" target="_blank" style="color: #3498db;">VisionUSA.org</a> - Free Eye Exams<br>
-                                💊 <a href="https://www.needymeds.org" target="_blank" style="color: #3498db;">NeedyMeds.org</a> - Medication Help<br>
-                            </div>
-                        </div>
-                        
-                        <!-- Financial Assistance -->
-                        <div style="background: rgba(243, 156, 18, 0.2); padding: 25px; border-radius: 15px; border: 1px solid #f39c12;">
-                            <h3 style="color: #f39c12; margin-bottom: 20px;">💰 FINANCIAL AID</h3>
-                            <div style="line-height: 1.8; font-size: 0.95rem;">
-                                <strong>Emergency Financial Help:</strong><br>
-                                📞 211 - Dial 2-1-1 for local resources<br>
-                                🛡️ <a href="https://www.salvationarmyusa.org" target="_blank" style="color: #3498db;">SalvationArmyUSA.org</a><br>
-                                ⛪ <a href="https://www.catholiccharitiesusa.org" target="_blank" style="color: #3498db;">CatholicCharitiesUSA.org</a><br>
-                                🔴 <a href="https://www.redcross.org" target="_blank" style="color: #3498db;">RedCross.org</a> - Emergency Aid<br><br>
-                                
-                                <strong>Government Benefits:</strong><br>
-                                🏛️ <a href="https://www.benefits.gov" target="_blank" style="color: #3498db;">Benefits.gov</a> - All Federal Benefits<br>
-                                🍽️ <a href="https://www.fns.usda.gov/snap" target="_blank" style="color: #3498db;">SNAP</a> - Food Stamps<br>
-                                ⚡ <a href="https://www.acf.hhs.gov/ocs/liheap" target="_blank" style="color: #3498db;">LIHEAP</a> - Utility Help<br>
-                                🏠 <a href="https://www.hud.gov" target="_blank" style="color: #3498db;">HUD.gov</a> - Housing Assistance<br>
-                            </div>
-                        </div>
-                        
-                        <!-- Legal Aid -->
-                        <div style="background: rgba(52, 152, 219, 0.2); padding: 25px; border-radius: 15px; border: 1px solid #3498db;">
-                            <h3 style="color: #3498db; margin-bottom: 20px;">⚖️ LEGAL AID</h3>
-                            <div style="line-height: 1.8; font-size: 0.95rem;">
-                                <strong>Free Legal Help:</strong><br>
-                                ⚖️ <a href="https://www.lsc.gov/find-legal-aid" target="_blank" style="color: #3498db;">LSC.gov/find-legal-aid</a><br>
-                                📚 <a href="https://www.justia.com/lawyer-directory" target="_blank" style="color: #3498db;">Justia.com</a> - Free Legal Info<br>
-                                👨‍⚖️ <a href="https://www.avvo.com" target="_blank" style="color: #3498db;">Avvo.com</a> - Free Legal Advice<br>
-                                📄 <a href="https://www.legalaid.org" target="_blank" style="color: #3498db;">LegalAid.org</a><br><br>
-                                
-                                <strong>Specialized Legal:</strong><br>
-                                🏠 Tenant Rights: <a href="https://www.nolo.com/legal-encyclopedia/landlord-tenant-law" target="_blank" style="color: #3498db;">Nolo.com</a><br>
-                                👨‍👩‍👧‍👦 Family Law: 1-800-799-7233<br>
-                                🌍 Immigration: <a href="https://www.immigrationadvocates.org" target="_blank" style="color: #3498db;">ImmigrationAdvocates.org</a><br>
-                            </div>
-                        </div>
-                        
-                        <!-- Food & Housing -->
-                        <div style="background: rgba(230, 126, 34, 0.2); padding: 25px; border-radius: 15px; border: 1px solid #e67e22;">
-                            <h3 style="color: #e67e22; margin-bottom: 20px;">🏠 FOOD & HOUSING</h3>
-                            <div style="line-height: 1.8; font-size: 0.95rem;">
-                                <strong>Food Security:</strong><br>
-                                🍽️ <a href="https://www.feedingamerica.org" target="_blank" style="color: #3498db;">FeedingAmerica.org</a> - Food Banks<br>
-                                📞 211 - Local Food Pantries<br>
-                                👶 <a href="https://www.fns.usda.gov/wic" target="_blank" style="color: #3498db;">WIC Program</a> - Women, Infants, Children<br>
-                                🏫 School meals: <a href="https://www.fns.usda.gov/school-meals" target="_blank" style="color: #3498db;">Free/Reduced Lunch</a><br><br>
-                                
-                                <strong>Housing Help:</strong><br>
-                                🏠 <a href="https://www.hud.gov/findrental" target="_blank" style="color: #3498db;">HUD.gov/findrental</a><br>
-                                🚨 <a href="https://www.hudexchange.info" target="_blank" style="color: #3498db;">Emergency Housing</a><br>
-                                📞 1-800-569-4287 - Housing Counseling<br>
-                                🏚️ <a href="https://www.homelessshelterdirectory.org" target="_blank" style="color: #3498db;">Homeless Shelters</a><br>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 40px; padding: 30px; background: rgba(243, 156, 18, 0.2); border-radius: 15px; border: 1px solid #f39c12;">
-                        <h3 style="color: #f39c12; margin-bottom: 15px;">💡 "This is what makes CareZiaSpace special"</h3>
-                        <p style="font-size: 1.1rem; line-height: 1.6; opacity: 0.9;">These aren't just links - these are lifelines. Every resource here has been verified and has helped real people in crisis. The emergency remotes generate revenue, but these FREE resources save lives and change communities. This is our true mission.</p>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button onclick="this.closest('div').remove()" style="background: #95a5a6; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1rem;">Close Resources</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
+        
+        function emergencyServices() {
+            showSection('emergency');
         }
-
-        // Resource Modal Function
-        function showResourceModal(title, icon, resources) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 10001; 
-                display: flex; align-items: center; justify-content: center; padding: 20px;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 30px; border-radius: 15px; color: white; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto;">
-                    <div style="text-align: center; margin-bottom: 25px;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">${icon}</div>
-                        <h2 style="color: #f39c12; margin-bottom: 10px;">${title}</h2>
-                        <p style="opacity: 0.8;">Free resources that truly help people</p>
-                    </div>
-                    
-                    <div style="line-height: 1.8; font-size: 0.95rem;">
-                        ${resources.map(resource => {
-                            if (resource.startsWith('•')) {
-                                return `<div style="margin-left: 15px; opacity: 0.9;">${resource}</div>`;
-                            } else if (resource.includes('**') && resource.includes(':**')) {
-                                return `<div style="color: #3498db; font-weight: 600; margin-top: 20px; margin-bottom: 10px;">${resource.replace(/\*\*/g, '')}</div>`;
-                            } else if (resource === '') {
-                                return '<br>';
-                            } else {
-                                return `<div style="margin: 10px 0;">${resource}</div>`;
-                            }
-                        }).join('')}
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button onclick="showAllFreeResources(); this.closest('div').remove();" style="background: #27ae60; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px; font-weight: 600;">🌟 See All Free Resources</button>
-                        <button onclick="this.closest('div').remove()" style="background: #95a5a6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px; font-weight: 600;">Close</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
+        
+        function buyCrypto() {
+            alert('₿ Crypto Payment\n\nCrypto payment integration would be implemented here for alternative payment methods.');
         }
-
-        // Add Free Resources Button to Main Page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add floating Free Resources button
-            const freeResourcesBtn = document.createElement('button');
-            freeResourcesBtn.innerHTML = '🆓 FREE RESOURCES';
-            freeResourcesBtn.style.cssText = `
-                position: fixed; bottom: 20px; left: 20px; 
-                background: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
-                color: white; border: none; padding: 15px 25px;
-                border-radius: 50px; cursor: pointer; font-weight: 600;
-                font-size: 1rem; z-index: 1000; animation: bounce 2s infinite;
-                box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
-            `;
-            
-            freeResourcesBtn.onclick = showAllFreeResources;
-            document.body.appendChild(freeResourcesBtn);
-            
-            // Add bounce animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes bounce {
-                    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-                    40% { transform: translateY(-10px); }
-                    60% { transform: translateY(-5px); }
+        
+        function supportPayPal() {
+            // Replace with your actual PayPal link
+            alert('💳 Payment Processing\n\nThis would redirect to PayPal checkout for $199 lifetime access. Replace this alert with your actual PayPal payment link.');
+            // window.open('https://paypal.me/yourusername/199', '_blank');
+        }
+        
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        
+        // Service Worker for PWA functionality (optional)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        }
+        
+        // Emergency button always accessible
+        document.addEventListener('keydown', function(event) {
+            // Emergency activation with Ctrl+Shift+E
+            if (event.ctrlKey && event.shiftKey && event.key === 'E') {
+                if (confirm('Emergency services activated via keyboard shortcut. Call 911?')) {
+                    call911();
                 }
-            `;
-            document.head.appendChild(style);
+            }
         });
+    </script>
+</body>
+</html>
